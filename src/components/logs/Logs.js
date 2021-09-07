@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import LogItem from './LogItem'
+import Preloader  from '../layout/Preloader'
 
 const Logs = () => {
 
@@ -27,6 +29,10 @@ const Logs = () => {
         setLoading(false)
     }
 
+    if(loading){
+        return <Preloader/>
+    }
+
     // Copied from the Brad git folder
     return (
         <ul className='collection with-header'>
@@ -36,7 +42,7 @@ const Logs = () => {
         {!loading && logs.length === 0 ? (
             <p className='center'>No logs to show...</p>
         ) : (
-            logs.map(log => <li key={log.id}>{log.message}</li>)
+            logs.map(log => <LogItem log={log} key={log.id}/>)
         )}
         </ul>
     )
