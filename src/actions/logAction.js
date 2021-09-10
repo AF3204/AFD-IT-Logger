@@ -1,9 +1,14 @@
 /**
  * This is where we have the action
  * in this case pull all of the logs
+ * Remember this flow: Action -> Reducer -> Main component/application
  */
 
-import { GET_LOGS, SET_LOADING, LOGS_ERROR } from "./types.js";
+import { 
+    GET_LOGS,
+    ADD_LOG,
+    SET_LOADING,
+    LOGS_ERROR } from "./types.js";
 
 // We can return a function instead of a response by using thunk
 // We need to research and understand this better
@@ -52,8 +57,40 @@ export const getLogs = () => async (dispatch) => {
             payload:err.response.data
         })  
     }
-    
 }
+
+/**
+ * Add new log
+ * log -> body to be sent
+ * async dispatch -> like before
+ * JSON.stringify -> Turn the JSON to one string
+ *  */ 
+
+export const addLog = log => async (dispatch) => {
+    try {
+      setLoading();
+  
+      const res = await fetch('/logs', {
+        method: 'POST',
+        body: JSON.stringify(log),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "same-origin"
+      });
+      const data = await res.json();
+  
+      dispatch({
+        type: ADD_LOG,
+        payload: data
+      });
+    } catch (err) {
+      dispatch({
+        type: LOGS_ERROR,
+        payload: err
+      });
+    }
+};
 
 // Getting the loading status form withing
 // Set loading to true

@@ -1,21 +1,43 @@
 import React, {useState} from 'react'
 import M from 'materialize-css/dist/js/materialize.min.js';
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
+import {addLog} from '../../actions/logAction'
 
-const AddLogModel = () => {
+const AddLogModel = ({addLog}) => {
     
     // The model contains message, tech name and attention 
-    const [msg, setMsg] = useState('')
+    const [message, setMessage] = useState('')
     const [tech, setTech] = useState('')
-    const [attn, setAttn] = useState(false)
+    const [attention, setAttention] = useState(false)
 
     const onSubmit=()=>{
-        if(msg === '' || tech ==='' ){
+        if(message === '' || tech ==='' ){
             M.toast({
                 html:'Enter a message along with the technician',
                 className:'danger'
             })
         } else {
-            console.log(msg, tech, attn);
+            // console.log(message, tech, attention);
+            // Preparing the content
+            const newLog={
+                message,
+                attention,
+                tech,
+                date: new Date()
+            }
+
+            // Sending to addLog
+            addLog(newLog)
+
+            M.toast({
+                html:`New Log reported by ${tech}`
+            })
+
+
+            setMessage('')
+            setTech('')
+            setAttention(false)
         }
     }
 
@@ -28,11 +50,11 @@ const AddLogModel = () => {
             <div className='input-field'>
                 <input
                     type='text'
-                    name='msg'
-                    value={msg}
-                    onChange={e => setMsg(e.target.value)}
+                    name='message'
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
                     />
-                <label htmlFor='msg' className='active'>
+                <label htmlFor='message' className='active'>
                     Log Message
                 </label>
             </div>
@@ -63,9 +85,9 @@ const AddLogModel = () => {
                     <input
                         type='checkbox'
                         className='filled-in'
-                        checked={attn}
-                        value={attn}
-                        onChange={e => setAttn(!attn)}
+                        checked={attention}
+                        value={attention}
+                        onChange={e => setAttention(!attention)}
                     />
                     <span>Needs Attention</span>
                 </label>
@@ -91,4 +113,9 @@ const modalStyle ={
     height: '75%'
 }
 
-export default AddLogModel
+AddLogModel.propTypes={
+    addLog:PropTypes.func.isRequired,
+}
+
+// We use null cause it should not have any value by default
+export default connect(null,{addLog})(AddLogModel)
