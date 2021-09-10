@@ -15,6 +15,13 @@ import EditLogModel from "./components/logs/EditLogModel";
 import AddTechModal from "./components/techs/AddTechModal";
 import TechListModal from "./components/techs/TechListModal";
 
+// 20210910 - Implementing the Redux and Reducers
+// React-Redux: Responsible for connecting react with redux
+// for the provider to the app level
+// Store is the reducer connector
+import {Provider} from 'react-redux'
+import store from "./store";
+
 const App = () => {
 
   // Using useEffect to initalise the css framework
@@ -23,17 +30,19 @@ const App = () => {
   })
 
   return (
-    <Fragment>
-      <SearchBar/>
-      <div className='container'>
-        <AddBtn/>
-        <AddLogModel/>
-        <EditLogModel/>
-        <AddTechModal/>
-        <TechListModal/>
-        <Logs/>
-      </div>
-    </Fragment>
+    <Provider store={store}>
+      <Fragment>
+        <SearchBar/>
+        <div className='container'>
+          <AddBtn/>
+          <AddLogModel/>
+          <EditLogModel/>
+          <AddTechModal/>
+          <TechListModal/>
+          <Logs/>
+        </div>
+      </Fragment>
+    </Provider>
   );
 }
 
