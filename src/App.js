@@ -11,6 +11,9 @@ import SearchBar from "./components/layout/SearchBar";
 import Logs from "./components/logs/Logs";
 import AddBtn from "./components/layout/AddBtn";
 import AddLogModel from "./components/logs/AddLogModel";
+import EditLogModel from "./components/logs/EditLogModel";
+import AddTechModal from "./components/techs/AddTechModal";
+import TechListModal from "./components/techs/TechListModal";
 
 const App = () => {
 
@@ -25,6 +28,9 @@ const App = () => {
       <div className='container'>
         <AddBtn/>
         <AddLogModel/>
+        <EditLogModel/>
+        <AddTechModal/>
+        <TechListModal/>
         <Logs/>
       </div>
     </Fragment>

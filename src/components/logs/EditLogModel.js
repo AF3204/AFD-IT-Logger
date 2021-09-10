@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import M from 'materialize-css/dist/js/materialize.min.js';
 
-const AddLogModel = () => {
+const EditLogModel = () => {
     
     // The model contains message, tech name and attention 
     const [msg, setMsg] = useState('')
@@ -14,13 +14,18 @@ const AddLogModel = () => {
                 html:'Enter a message along with the technician',
                 className:'danger'
             })
-        } else {
+        }else{
+            
             console.log(msg, tech, attn);
+            // Once submitted, clear fields
+            setMsg('')
+            setTech('')
+            setAttn(false)
         }
     }
 
     return (
-        <div id='add-log-modal' className='modal' style={modalStyle}>
+        <div id='edit-log-modal' className='modal' style={modalStyle}>
         <div className='modal-content'>
             <h4>Enter System Log</h4>
             <div className='row'>
@@ -91,4 +96,4 @@ const modalStyle ={
     height: '75%'
 }
 
-export default AddLogModel
+export default EditLogModel
