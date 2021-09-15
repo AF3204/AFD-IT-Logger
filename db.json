@@ -1,9 +1,6 @@
 {
   "logs": [
     {
-      "id": 1
-    },
-    {
       "id": 2,
       "message": "Fixed hard drive on workstation 002",
       "attention": false,
@@ -25,7 +22,7 @@
       "date": "2019-05-31T19:57:35.544Z"
     },
     {
-      "id": 6
+      "id": 5
     }
   ],
   "techs": [

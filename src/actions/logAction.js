@@ -12,7 +12,8 @@ import {
     SET_CURRENT,
     CLEAR_CURRENT,
     SET_LOADING,
-    LOGS_ERROR } from "./types.js";
+    LOGS_ERROR, 
+    SEARCH_LOGS} from "./types.js";
 
 // We can return a function instead of a response by using thunk
 // We need to research and understand this better
@@ -141,6 +142,28 @@ export const updateLog = log => async dispatch => {
     });
   }
 };
+
+// Search functionality
+export const searchLogs = (text) => async dispatch =>{
+  try {
+    setLoading()
+
+    const res = await fetch(`http://localhost:5001/logs/?q=${text}`, {
+      method: 'GET',
+      credentials: "same-origin"
+    });
+
+    const data = await res.json()
+
+    dispatch({
+      type: SEARCH_LOGS,
+      payload: data
+    })
+
+  } catch (error) {
+    
+  }
+}
 
 // Set the Current Values
 // In this case the log

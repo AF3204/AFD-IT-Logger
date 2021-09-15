@@ -10,6 +10,7 @@ import {
     SET_CURRENT,
     CLEAR_CURRENT,
     LOGS_ERROR, 
+    SEARCH_LOGS,
     CLEAR_LOGS} from "../actions/types.js";
 /**
  * Still uses the state and action
@@ -54,6 +55,11 @@ export default (state = initialState, action) => {
                     ? action.payload
                     : log
                 )
+            }
+        case SEARCH_LOGS:
+            return{
+                ...state,
+                logs: action.payload
             }
         case SET_CURRENT:
             return{
