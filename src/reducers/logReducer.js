@@ -1,7 +1,16 @@
 // THe same as the useHooks and Reducers
 
 // Bringing in the types
-import { GET_LOGS, ADD_LOG, SET_LOADING, LOGS_ERROR } from "../actions/types.js";
+import { 
+    GET_LOGS,
+    ADD_LOG,
+    DELETE_LOG,
+    UPDATE_LOG,
+    SET_LOADING,
+    SET_CURRENT,
+    CLEAR_CURRENT,
+    LOGS_ERROR, 
+    CLEAR_LOGS} from "../actions/types.js";
 /**
  * Still uses the state and action
  * Also, need to initialise the initialState
@@ -30,6 +39,31 @@ export default (state = initialState, action) => {
                 ...state,
                 logs:[...state.logs, action.payload],
                 loading: false
+            }
+        case DELETE_LOG:
+            return{
+                ...state,
+                loading:false,
+                logs: state.logs.filter(log => log.id !== action.payload)
+            }
+        case UPDATE_LOG:
+            return{
+                ...state,
+                logs: state.logs.map(
+                    log=> log.id === action.payload.id
+                    ? action.payload
+                    : log
+                )
+            }
+        case SET_CURRENT:
+            return{
+                ...state,
+                current: action.payload
+            }
+        case CLEAR_CURRENT:
+            return{
+                ...state,
+                current: null
             }
         case SET_LOADING:
             return{

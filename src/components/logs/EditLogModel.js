@@ -1,45 +1,68 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import M from 'materialize-css/dist/js/materialize.min.js';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { updateLog } from '../../actions/logAction';
 
-const EditLogModel = () => {
+const EditLogModel = ({current, updateLog}) => {
     
     // The model contains message, tech name and attention 
-    const [msg, setMsg] = useState('')
+    const [message, setMessage] = useState('')
     const [tech, setTech] = useState('')
-    const [attn, setAttn] = useState(false)
+    const [attention, setAttention] = useState(false)
+
+    useEffect(()=>{
+        if(current){
+            setMessage(current.message)
+            setTech(current.tech)
+            setAttention(current.attention)
+        }
+    }, [current])
 
     const onSubmit=()=>{
-        if(msg === '' || tech ==='' ){
+        if(message === '' || tech ==='' ){
             M.toast({
                 html:'Enter a message along with the technician',
                 className:'danger'
             })
         }else{
             
-            console.log(msg, tech, attn);
+            // console.log(message, tech, attention);
             // Once submitted, clear fields
-            setMsg('')
+            // 20210915 - Updating
+
+            const _updateLog = {
+                id:current.id,
+                message,
+                attention,
+                tech,
+                date:new Date()
+            }
+
+            updateLog(_updateLog)
+            setMessage('')
             setTech('')
-            setAttn(false)
+            setAttention(false)
         }
     }
 
     return (
         <div id='edit-log-modal' className='modal' style={modalStyle}>
         <div className='modal-content'>
-            <h4>Enter System Log</h4>
+            <h4>Edit System Log</h4>
             <div className='row'>
                 {/* For the Onchange, we just target just the specific field */}
             <div className='input-field'>
                 <input
                     type='text'
-                    name='msg'
-                    value={msg}
-                    onChange={e => setMsg(e.target.value)}
+                    name='message'
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
                     />
-                <label htmlFor='msg' className='active'>
+                {/* Since this is an edit, no need label */}
+                {/* <label htmlFor='message' className='active'>
                     Log Message
-                </label>
+                </label> */}
             </div>
             </div>
 
@@ -68,9 +91,9 @@ const EditLogModel = () => {
                     <input
                         type='checkbox'
                         className='filled-in'
-                        checked={attn}
-                        value={attn}
-                        onChange={e => setAttn(!attn)}
+                        checked={attention}
+                        value={attention}
+                        onChange={e => setAttention(!attention)}
                     />
                     <span>Needs Attention</span>
                 </label>
@@ -96,4 +119,13 @@ const modalStyle ={
     height: '75%'
 }
 
-export default EditLogModel
+EditLogModel.propTypes={
+    current: PropTypes.object.isRequired,
+    updateLog: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = state => ({
+    current: state.log.current
+})
+
+export default connect(mapStateToProps,{updateLog})(EditLogModel)

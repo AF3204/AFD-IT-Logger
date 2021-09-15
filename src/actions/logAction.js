@@ -7,6 +7,10 @@
 import { 
     GET_LOGS,
     ADD_LOG,
+    DELETE_LOG,
+    UPDATE_LOG,
+    SET_CURRENT,
+    CLEAR_CURRENT,
     SET_LOADING,
     LOGS_ERROR } from "./types.js";
 
@@ -90,6 +94,68 @@ export const addLog = log => async (dispatch) => {
         payload: err
       });
     }
+};
+
+// Delete log from server
+export const deleteLog = id => async dispatch => {
+  try {
+    setLoading();
+    await fetch(`http://localhost:5001/logs/${id}`, {
+      method: 'DELETE',
+      credentials: "same-origin"
+    });
+    
+    dispatch({
+      type: DELETE_LOG,
+      payload: id
+    });
+  } catch (err) {
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err
+    });
+  }
+};
+
+// Update log from server
+// Pass in the log and body since we're going to update the whole body
+export const updateLog = log => async dispatch => {
+  try {
+    setLoading();
+    const res = await fetch(`http://localhost:5001/logs/${log.id}`, {
+      method: 'PUT',
+      body:JSON.stringify(log),
+      credentials: "same-origin"
+    });
+    
+    const data = await res.json()
+
+    dispatch({
+      type: UPDATE_LOG,
+      payload: log
+    });
+  } catch (err) {
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err
+    });
+  }
+};
+
+// Set the Current Values
+// In this case the log
+export const setCurrent = log => {
+  return {
+    type: SET_CURRENT,
+    payload: log
+  };
+};
+
+// Clear the Current Values -> everything to null, so no payload
+export const clearCurrent = () => {
+  return {
+    type: CLEAR_CURRENT
+  }
 };
 
 // Getting the loading status form withing
