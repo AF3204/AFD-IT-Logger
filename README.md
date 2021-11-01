@@ -26,3 +26,9 @@ Personal opinion: I might be too used to PHP and DotNet, but by understanding ne
 
 ## 9-September-2021
 - Added a button for the Functionality and to call the Modal
+
+## 7-September-2021
+- Initialise the project ( Note, next time use the Create-React-App as dev dependencies else it'll be caught in the Snyk hell)
+- Added the DB.JSON. It is really cool and simple to modify and add/edit
+- Setting up the Materialise CSS for this project
+- Added the Search Bar and the Logging components. Now can search and display all logs
