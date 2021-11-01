@@ -2,9 +2,14 @@
 # IT Logger with React and JSON DB
 
 ## Introduction
-This is a React app to track IT department tasks and issues. Uses JSON-Server as a mock backend.
+This is the third part of the React Front to Back course from Brad Traversy
 
-This is one of the ways to track my progress as pat of the Brad Traversy course for the React Front- and Backend development course. 
+The Project aims to understand the components structure and the accompanying UI for this simple one page application, and the Redux for the State management to fascilitate data sharing across various components. Creates a tangible data structure to call multiple times
+
+## Future enhancement
+Since this is a base application, I might use this to further strengthen my core understanding in ReactJS. 
+
+Personal opinion: I might be too used to PHP and DotNet, but by understanding new techs, I not only expand my knowledge of programming, but the hows and why. Yes, I am rambling here 
 
 
 ## 15-September-2021
